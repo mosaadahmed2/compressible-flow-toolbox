@@ -56,7 +56,7 @@ Frontend
 
 React (JavaScript)
 
-Plotly (for visualization)
+Plotly (interactive visualization)
 
 Infrastructure
 
@@ -65,23 +65,75 @@ Docker
 docker-compose
 
 Folder Structure
-backend/
-  core/        # Physics equations
-  solvers/     # Numerical methods
-  api/         # REST API endpoints
-  validation/  # Golden cases and validation scripts
-  tests/       # Automated tests
+Root Directory
 
-frontend/
-  src/
-    pages/
-    components/
-    plots/
-    api/
+backend/ – Backend computation and API services
 
-docs/
-  architecture.md
-  architecture_diagram.png
+frontend/ – User interface and visualization
+
+docs/ – Project documentation and diagrams
+
+docker-compose.yml – Container orchestration
+
+README.md – Project overview and instructions
+
+.gitignore – Git ignore rules
+
+Backend
+
+main.py – FastAPI application entry point
+
+requirements.txt – Backend dependencies
+
+API Layer
+
+routes.py – REST API endpoints
+
+schemas.py – Request/response schemas
+
+Core Physics Layer
+
+isentropic.py – Isentropic flow equations
+
+normal_shock.py – Normal shock relations
+
+oblique_shock.py – Oblique shock relations
+
+fanno.py – Fanno flow relations
+
+rayleigh.py – Rayleigh flow relations
+
+Solver Layer
+
+root_finding.py – Numerical root-finding utilities
+
+isentropic_solvers.py – Inverse solvers for isentropic flow
+
+Validation and Testing
+
+golden_cases.csv – Reference validation cases
+
+validate.py – Validation scripts
+
+test_smoke.py – Automated unit tests
+
+Frontend
+
+App.jsx – Main React application
+
+main.jsx – React entry point
+
+pages/ – UI pages for flow modules
+
+components/ – Reusable UI components
+
+plots/ – Plotly visualization components
+
+api/ – Frontend API calls
+
+Documentation
+
+architecture_diagram.png – High-level system architecture diagram
 
 How to Run (Development)
 Backend
@@ -93,3 +145,15 @@ Frontend
 cd frontend
 npm install
 npm run dev
+
+Key Design Principles
+
+Stateless computation (no database)
+
+Deterministic numerical results
+
+Separation of concerns
+
+Validation-driven development
+
+Modular and extensible architecture
