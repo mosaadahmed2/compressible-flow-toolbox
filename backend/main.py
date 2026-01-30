@@ -1,14 +1,15 @@
+# backend/main.py
 from fastapi import FastAPI
+from backend.api.routes import router
+
 
 app = FastAPI(
     title="Compressible Flow Toolbox API",
-    description="Backend API for validated compressible flow calculations",
-    version="0.1.0"
+    version="0.1.0",
+    description="Validated compressible-flow calculations (direct + inverse).",
 )
 
-@app.get("/")
-def root():
-    return {"message": "Compressible Flow Toolbox API running"}
+app.include_router(router, prefix="/api")
 
 @app.get("/health")
 def health():
