@@ -1,0 +1,5 @@
+case_id,module,gamma,known,value,branch,expected_M,tol_M
+ISO_001,isentropic,1.4,P_P0,0.1278,,2.0,1e-4
+ISO_002,isentropic,1.4,M,1.0,,1.0,1e-8
+ISO_003,isentropic,1.4,A_Astar,1.687,supersonic,2.0,1e-3
+
