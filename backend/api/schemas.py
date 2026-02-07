@@ -19,3 +19,20 @@ class IsentropicResponse(BaseModel):
     P_P0: float
     rho_rho0: float
     A_Astar: float
+
+
+class NormalShockRequest(BaseModel):
+    gamma: float = Field(1.4, gt=1.0, description="Heat capacity ratio (default 1.4)")
+    M1: float = Field(..., gt=0.0, description="Upstream Mach number (must be > 1 for a normal shock)")
+
+
+class NormalShockResponse(BaseModel):
+    M1: float
+    M2: float
+    p2_p1: float = Field(..., alias="p2/p1")
+    rho2_rho1: float = Field(..., alias="rho2/rho1")
+    T2_T1: float = Field(..., alias="T2/T1")
+    pt2_pt1: float = Field(..., alias="pt2/pt1")
+
+    class Config:
+        populate_by_name = True
