@@ -36,3 +36,8 @@ class NormalShockResponse(BaseModel):
 
     class Config:
         populate_by_name = True
+
+class ObliqueShockRequest(BaseModel):
+    gamma: float = Field(1.4, gt=1.0)
+    M1: float = Field(..., gt=1.0)
+    beta_deg: float = Field(..., gt=0.0, lt=90.0)
