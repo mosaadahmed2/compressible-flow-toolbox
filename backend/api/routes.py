@@ -10,7 +10,28 @@ from backend.api.schemas import (
 from backend.solvers.isentropic_solvers import solve_isentropic
 from backend.solvers.normal_shock import solve_normal_shock
 
+from backend.solvers.oblique_shock import solve_oblique_shock
+from backend.api.schemas import ObliqueShockRequest
+
 router = APIRouter()
+
+
+
+
+@router.post("/oblique-shock")
+def oblique_shock(req: ObliqueShockRequest):
+    """
+    Oblique shock relations.
+    Inputs: M1, beta (deg), gamma
+    """
+    try:
+        return solve_oblique_shock(
+            M1=req.M1,
+            beta_deg=req.beta_deg,
+            gamma=req.gamma,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
 
 # -----------------------
 # Isentropic endpoint
