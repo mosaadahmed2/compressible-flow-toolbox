@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #1f1f1f, #2c2c2c);
+    margin: 0;
+    padding: 0;
+    color: #f1f1f1;
+  
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Main page wrapper */
+  .container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    margin-bottom: 30px;
+  }
+  
+  /* Tabs */
+  .tabs {
+    margin-bottom: 30px;
+  }
+  
+  .tabs button {
+    margin: 0 10px;
+    padding: 10px 18px;
+    background: #333;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .tabs button:hover {
+    background: #444;
+  }
+  
+  /* Main Box */
+  .panel {
+    margin: 0 auto;        /* ← THIS centers the box */
+    background: #2a2a2a;
+    padding: 40px;
+    border-radius: 12px;
+    width: 600px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    text-align: left;      /* keeps form labels aligned properly */
+  }
+  
+  /* Form Layout */
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+  }
+  
+  label {
+    width: 160px;
+  }
+  
+  input,
+  select {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #1e1e1e;
+    color: white;
+  }
+  
+  /* Button */
+  button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: #4a90e2;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background: #357abd;
+  }
+  
+  /* Results Box */
+  .results {
+    margin-top: 30px;
+    padding: 20px;
+    background: #1c1c1c;
+    border-radius: 8px;
+  }
+  
+  .results div {
+    margin-bottom: 8px;
+  }
+  
+  /* Error */
+  .error {
+    color: #ff6b6b;
+    margin-top: 15px;
+  }
+  
