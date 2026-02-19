@@ -1,18 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import IsentropicForm from "/components/IsentropicForm";
+import NormalShockForm from "/components/NormalShockForm";
+import ObliqueShockForm from "/components/ObliqueShockForm";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [tab, setTab] = useState("isentropic");
 
   return (
-    <div style={{ padding: 24, fontFamily: "sans-serif" }}>
+    <div className="container">
       <h1>Compressible Flow Toolbox</h1>
-      <p>Week 1 scaffold </p>
-    </div>
-  
-  )
-}
 
-export default App
+      <div className="tabs">
+        <button onClick={() => setTab("isentropic")}>
+          Isentropic
+        </button>
+        <button onClick={() => setTab("normal")}>
+          Normal Shock
+        </button>
+        <button onClick={() => setTab("oblique")}>
+          Oblique Shock
+        </button>
+      </div>
+
+      {tab === "isentropic" && <IsentropicForm />}
+      {tab === "normal" && <NormalShockForm />}
+      {tab === "oblique" && <ObliqueShockForm />}
+    </div>
+  );
+}
