@@ -1,4 +1,4 @@
-const BASE_URL = "https://compressible-flow-toolbox.onrender.com/";
+const BASE_URL = "https://compressible-flow-toolbox.onrender.com/api";
 
 async function post(endpoint, payload) {
   const res = await fetch(`${BASE_URL}/${endpoint}`, {
