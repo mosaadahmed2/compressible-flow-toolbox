@@ -19,4 +19,6 @@ export const api = {
   isentropic: (data) => post("isentropic", data),
   normalShock: (data) => post("normal-shock", data),
   obliqueShock: (data) => post("oblique-shock", data),
+  fanno: (data) => post("fanno", data),
+  rayleigh: (data) => post("rayleigh", data),
 };

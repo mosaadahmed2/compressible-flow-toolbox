@@ -13,8 +13,27 @@ from backend.solvers.normal_shock import solve_normal_shock
 from backend.solvers.oblique_shock import solve_oblique_shock
 from backend.api.schemas import ObliqueShockRequest
 
+from backend.solvers.fanno_flow import solve_fanno
+from backend.solvers.rayleigh_flow import solve_rayleigh
+from backend.api.schemas import FannoRequest, RayleighRequest
+
+
 router = APIRouter()
 
+@router.post("/fanno")
+def fanno(req: FannoRequest):
+    try:
+        return solve_fanno(gamma=req.gamma, known=req.known, value=req.value, branch=req.branch)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+
+@router.post("/rayleigh")
+def rayleigh(req: RayleighRequest):
+    try:
+        return solve_rayleigh(gamma=req.gamma, known=req.known, value=req.value, branch=req.branch)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
 
 
 
