@@ -41,3 +41,16 @@ class ObliqueShockRequest(BaseModel):
     gamma: float = Field(1.4, gt=1.0)
     M1: float = Field(..., gt=1.0)
     beta_deg: float = Field(..., gt=0.0, lt=90.0)
+
+class FannoRequest(BaseModel):
+    gamma: float = Field(1.4, gt=1.0)
+    known: Literal["M", "T/T*", "p/p*", "rho/rho*", "pt/pt*", "4fL/D"]
+    value: float
+    branch: Optional[Literal["subsonic", "supersonic"]] = "subsonic"
+
+class RayleighRequest(BaseModel):
+    gamma: float = Field(1.4, gt=1.0)
+    known: Literal["M", "p/p*", "T/T*", "rho/rho*", "Tt/Tt*", "pt/pt*"]
+    value: float
+    branch: Optional[Literal["subsonic", "supersonic"]] = "subsonic"
+
