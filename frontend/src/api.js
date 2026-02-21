@@ -1,4 +1,8 @@
-const BASE_URL = "https://compressible-flow-toolbox.onrender.com/api";
+const BASE_URL =
+  window.location.hostname === "localhost"
+    ? "http://127.0.0.1:8000/api"
+    : "https://your-render-backend.onrender.com/api";
+
 
 async function post(endpoint, payload) {
   const res = await fetch(`${BASE_URL}/${endpoint}`, {

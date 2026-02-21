@@ -43,13 +43,14 @@ export default function ObliqueShockForm() {
       </div>
 
       <div className="form-group">
-        <label>Shock Angle β (deg)</label>
-        <input
-          type="number"
-          value={beta_deg}
-          onChange={(e) => setBetaDeg(+e.target.value)}
-        />
-      </div>
+  <label>Deflection Angle δ (deg)</label>
+  <input
+    type="number"
+    value={delta_deg}
+    onChange={(e) => setDeltaDeg(+e.target.value)}
+  />
+</div>
+
 
       <button onClick={compute}>Compute</button>
 
