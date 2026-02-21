@@ -39,22 +39,15 @@ def rayleigh(req: RayleighRequest):
 
 @router.post("/oblique-shock")
 def oblique_shock(req: ObliqueShockRequest):
-    """
-    Oblique shock relations.
-    Inputs: M1, beta (deg), gamma
-    """
     try:
         return solve_oblique_shock(
             M1=req.M1,
-            beta_deg=req.beta_deg,
+            delta_deg=req.delta_deg,
             gamma=req.gamma,
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
 
-# -----------------------
-# Isentropic endpoint
-# -----------------------
 @router.post("/isentropic", response_model=IsentropicResponse)
 def isentropic(req: IsentropicRequest):
     try:
@@ -69,9 +62,6 @@ def isentropic(req: IsentropicRequest):
         raise HTTPException(status_code=400, detail=str(e)) from e
 
 
-# -----------------------
-# Normal shock endpoint
-# -----------------------
 @router.post("/normal-shock")
 def normal_shock(req: NormalShockRequest):
     """
