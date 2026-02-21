@@ -14,18 +14,39 @@ export default function App() {
       <h1>Compressible Flow Toolbox</h1>
 
       <div className="tabs">
-        <button onClick={() => setTab("isentropic")}>
-          Isentropic
-        </button>
-        <button onClick={() => setTab("normal")}>
-          Normal Shock
-        </button>
-        <button onClick={() => setTab("oblique")}>
-          Oblique Shock
-        </button>
+      <button
+            className={tab === "isentropic" ? "active" : ""}
+            onClick={() => setTab("isentropic")}
+          >
+            Isentropic
+          </button>
+        <button
+            className={tab === "normal" ? "active" : ""}
+            onClick={() => setTab("normal")}
+          >
+            Normal Shock
+          </button>
+        
+        <button
+            className={tab === "oblique" ? "active" : ""}
+            onClick={() => setTab("oblique")}
+          >
+            Oblique Shock
+          </button>
 
-        <button onClick={() => setTab("fanno")}>Fanno</button>
-        <button onClick={() => setTab("rayleigh")}>Rayleigh</button>
+        <button
+            className={tab === "fanno" ? "active" : ""}
+            onClick={() => setTab("fanno")}
+          >
+            Fanno
+          </button>
+        <button
+            className={tab === "rayleigh" ? "active" : ""}
+            onClick={() => setTab("rayleigh")}
+          >
+            Rayleigh
+          </button>
+
 
       </div>
 

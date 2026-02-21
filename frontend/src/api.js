@@ -3,20 +3,19 @@ const BASE_URL =
     ? "http://127.0.0.1:8000/api"
     : "https://compressible-flow-toolbox.onrender.com/api";
 
-
 async function post(endpoint, payload) {
-  const res = await fetch(`${BASE_URL}/${endpoint}`, {
+  const response = await fetch(`${BASE_URL}/${endpoint}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.detail || "API error");
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "API error");
   }
 
-  return res.json();
+  return response.json();
 }
 
 export const api = {

@@ -25,6 +25,8 @@ export default function IsentropicForm() {
 
   return (
     <div className="panel">
+      
+      <h2>Isentropic</h2>
       <div className="form-group">
   <label>Gamma (γ)</label>
   <input
@@ -37,12 +39,11 @@ export default function IsentropicForm() {
 <div className="form-group">
   <label>Known Property</label>
   <select value={known} onChange={e => setKnown(e.target.value)}>
-    <option value="M">Mach (M)</option>
-    <option value="p/pt">p / p₀</option>
-    <option value="T/Tt">T / T₀</option>
-    <option value="rho/rhot">ρ / ρ₀</option>
-    <option value="A/A*">A / A*</option>
-  </select>
+  <option value="M">Mach (M)</option>
+  <option value="P_P0">P / P₀</option>
+  <option value="T_T0">T / T₀</option>
+  <option value="A_Astar">A / A*</option>
+</select>
 </div>
 
 <div className="form-group">
@@ -55,7 +56,7 @@ export default function IsentropicForm() {
 </div>
 
 
-{known === "A/A*" && (
+{known === "A/Astar" && (
   <div className="form-group">
     <label>Branch</label>
     <select value={branch} onChange={e => setBranch(e.target.value)}>
@@ -65,7 +66,10 @@ export default function IsentropicForm() {
   </div>
 )}
 
-      <button onClick={compute}>Compute</button>
+<div className="button-row">
+  <button onClick={compute}>Compute</button>
+</div>
+
 
       {error && <p className="error">{error}</p>}
 
