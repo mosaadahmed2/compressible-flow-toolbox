@@ -53,7 +53,7 @@ export default function ObliqueShockForm() {
   <label>Deflection Angle δ (deg)</label>
   <input
     type="number"
-    value={delta_deg}
+    value={deltaDeg}
     onChange={(e) => setDeltaDeg(+e.target.value)}
   />
 </div>
