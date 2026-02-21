@@ -1,7 +1,7 @@
 const BASE_URL =
   window.location.hostname === "localhost"
     ? "http://127.0.0.1:8000/api"
-    : "https://your-render-backend.onrender.com/api";
+    : "https://compressible-flow-toolbox.onrender.com/api";
 
 
 async function post(endpoint, payload) {
