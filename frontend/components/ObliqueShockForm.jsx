@@ -4,21 +4,28 @@ import { api } from "/src/api";
 export default function ObliqueShockForm() {
   const [gamma, setGamma] = useState(1.4);
   const [M1, setM1] = useState(2.5);
-  const [beta_deg, setBetaDeg] = useState(35);
+  const [deltaDeg, setDeltaDeg] = useState(10); 
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
   async function compute() {
     setError("");
     setResult(null);
-
+  
     try {
-      const res = await api.obliqueShock({ gamma, M1, beta_deg });
+      const payload = {
+        gamma,
+        M1,
+        delta_deg: deltaDeg
+      };
+  
+      const res = await api.obliqueShock(payload);
       setResult(res);
     } catch (e) {
       setError(e.message);
     }
   }
+  
 
   return (
     <div className="panel">
