@@ -11,11 +11,12 @@ body {
   
   /* Main page wrapper */
   .container {
-    width: 100%;
-    max-width: 1000px;
-    padding: 60px 20px;
-    text-align: center;
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px;
+    min-height: 100vh;
+  }  
   
   h1 {
     margin-bottom: 30px;
@@ -42,26 +43,25 @@ body {
   
   /* Main Box */
   .panel {
-    margin: 0 auto;        /* ← THIS centers the box */
     background: #2a2a2a;
-    padding: 40px;
+    padding: 30px;
     border-radius: 12px;
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    text-align: left;      /* keeps form labels aligned properly */
-  }
+  }  
   
   /* Form Layout */
   .form-group {
     display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 15px;
+    flex-direction: column;
+    margin-bottom: 15px;
   }
   
   label {
-    width: 160px;
-  }
+    margin-bottom: 6px;
+    width: 100%;
+  }  
   
   input,
   select {
@@ -71,6 +71,7 @@ body {
     border: 1px solid #555;
     background: #1e1e1e;
     color: white;
+    width: 100%;
   }
   
   /* Button */
@@ -104,5 +105,22 @@ body {
   .error {
     color: #ff6b6b;
     margin-top: 15px;
+  }
+  
+
+@media (max-width: 600px) {
+    .panel {
+      padding: 20px;
+    }
+  
+    h1 {
+      font-size: 20px;
+      text-align: center;
+    }
+  
+    .tabs button {
+      width: 100%;
+      margin-bottom: 8px;
+    }
   }
   
