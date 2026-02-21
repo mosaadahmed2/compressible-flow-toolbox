@@ -41,7 +41,10 @@ export default function NormalShockForm() {
         />
       </div>
 
-      <button onClick={compute}>Compute</button>
+      <div className="button-row">
+  <button onClick={compute}>Compute</button>
+</div>
+
 
       {error && <p className="error">{error}</p>}
 

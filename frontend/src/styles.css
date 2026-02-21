@@ -24,39 +24,53 @@ body {
   
   /* Tabs */
   .tabs {
-    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;          /* adds spacing between buttons */
+    margin-bottom: 40px;
+    flex-wrap: wrap;    /* makes it responsive */
   }
   
+  
   .tabs button {
-    margin: 0 10px;
-    padding: 10px 18px;
+    padding: 12px 22px;
     background: #333;
     border: none;
     color: white;
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
+    transition: all 0.2s ease;
   }
   
   .tabs button:hover {
     background: #444;
+    transform: translateY(-2px);
   }
+  
+  
+  .tabs button.active {
+    background: #4a90e2;
+  }
+  
   
   /* Main Box */
   .panel {
     background: #2a2a2a;
-    padding: 30px;
-    border-radius: 12px;
+    padding: 50px;
+    border-radius: 18px;
     width: 100%;
-    max-width: 600px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    max-width: 700px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
   }  
+  
   
   /* Form Layout */
   .form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
+    margin-bottom: 28px;   /* clean spacing */
   }
+  
   
   label {
     margin-bottom: 6px;
@@ -65,14 +79,28 @@ body {
   
   input,
   select {
-    flex: 1;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #555;
-    background: #1e1e1e;
-    color: white;
     width: 100%;
+    padding: 14px 45px 14px 16px;   /* extra right padding */
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    background-color: #1f1f1f;
+    color: white;
+    box-sizing: border-box;
+  
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
   }
+
+  select {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 18px center; /* move arrow left */
+    background-size: 18px;
+  }
+  
+
   
   /* Button */
   button {
@@ -106,6 +134,13 @@ body {
     color: #ff6b6b;
     margin-top: 15px;
   }
+
+  .button-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+  }
+  
   
 
 @media (max-width: 600px) {
