@@ -9,6 +9,17 @@ export default function FannoForm() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
+  const labelMap = {
+    "p/p*": "P / P*",
+    "T/T*": "T / T*",
+    "rho/rho*": "ρ / ρ*",
+    "Tt/Tt*": "Tₜ / Tₜ*",
+    "pt/pt*": "Pₜ / Pₜ*",
+    "4fL/D": "4fL / D",
+    "Smax/R": "Smax / R",
+  };
+  
+
   async function compute() {
     setError("");
     setResult(null);
@@ -67,12 +78,20 @@ export default function FannoForm() {
       {error && <p className="error">{error}</p>}
 
       {result && (
-        <div className="results">
-          {Object.entries(result).map(([k, v]) => (
-            <div key={k}>{k}: {typeof v === "number" ? v.toFixed(4) : String(v)}</div>
-          ))}
-        </div>
-      )}
+  <div className="results">
+    {Object.entries(result).map(([k, v]) => (
+      <div key={k} className="result-row">
+        <span className="result-label">
+          {labelMap[k] || k}
+        </span>
+        <span className="result-value">
+          {v === null ? "N/A" : Number(v).toFixed(4)}
+        </span>
+      </div>
+    ))}
+  </div>
+)}
+
     </div>
   );
 }

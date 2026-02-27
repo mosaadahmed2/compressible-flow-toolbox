@@ -119,11 +119,33 @@ body {
   
   /* Results Box */
   .results {
-    margin-top: 30px;
+    margin-top: 25px;
     padding: 20px;
     background: #1c1c1c;
-    border-radius: 8px;
+    border-radius: 10px;
   }
+  
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #333;
+  }
+  
+  .result-row:last-child {
+    border-bottom: none;
+  }
+  
+  .result-label {
+    font-weight: 500;
+    color: #ccc;
+  }
+  
+  .result-value {
+    font-weight: 600;
+    color: #4a90e2;
+  }
+  
   
   .results div {
     margin-bottom: 8px;
