@@ -7,6 +7,23 @@ export default function NormalShockForm() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
+  const labelMap = {
+    gamma: "γ",
+  
+    M1: "M₁",
+    M2: "M₂",
+    Mn1: "Mₙ₁",
+    Mn2: "Mₙ₂",
+  
+    beta_deg: "β (deg)",
+    delta_deg: "δ (deg)",
+  
+    "p2/p1": "P₂ / P₁",
+    "rho2/rho1": "ρ₂ / ρ₁",
+    "T2/T1": "T₂ / T₁",
+  };
+  
+
   async function compute() {
     setError("");
     setResult(null);
@@ -49,14 +66,20 @@ export default function NormalShockForm() {
       {error && <p className="error">{error}</p>}
 
       {result && (
-        <div className="results">
-          {Object.entries(result).map(([k, v]) => (
-            <div key={k}>
-              {k}: {Number(v).toFixed(4)}
-            </div>
-          ))}
-        </div>
-      )}
+  <div className="results">
+    {Object.entries(result).map(([k, v]) => (
+      <div key={k} className="result-row">
+        <span className="result-label">
+          {labelMap[k] || k}
+        </span>
+        <span className="result-value">
+          {v === null ? "N/A" : Number(v).toFixed(4)}
+        </span>
+      </div>
+    ))}
+  </div>
+)}
+
     </div>
   );
 }

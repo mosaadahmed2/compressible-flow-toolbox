@@ -35,6 +35,8 @@ def _fanno_4fL_D(M: float, gamma: float) -> float:
     return term1 + term2
 
 
+import math
+
 def solve_fanno(gamma: float, known: str, value: float, branch: str = "subsonic") -> dict:
     if gamma <= 1.0:
         raise ValueError("gamma must be > 1")
@@ -42,14 +44,21 @@ def solve_fanno(gamma: float, known: str, value: float, branch: str = "subsonic"
         raise ValueError("value must be > 0")
 
     def props(M: float) -> dict:
+        p_pstar = _fanno_p_pstar(M, gamma)
+        T_Tstar = _fanno_T_Tstar(M, gamma)
+
+        # Critical entropy gain
+        Smax_R = math.log(p_pstar) - (gamma / (gamma - 1.0)) * math.log(T_Tstar)
+
         return {
             "gamma": float(gamma),
             "M": float(M),
-            "T/T*": float(_fanno_T_Tstar(M, gamma)),
-            "p/p*": float(_fanno_p_pstar(M, gamma)),
+            "T/T*": float(T_Tstar),
+            "p/p*": float(p_pstar),
             "rho/rho*": float(_fanno_rho_rhostar(M, gamma)),
             "pt/pt*": float(_fanno_pt_ptstar(M, gamma)),
             "4fL/D": float(_fanno_4fL_D(M, gamma)),
+            "Smax/R": float(Smax_R),
         }
 
     if known == "M":
@@ -58,7 +67,6 @@ def solve_fanno(gamma: float, known: str, value: float, branch: str = "subsonic"
             raise ValueError("Mach must be > 0")
         return props(M)
 
-    # Choose bracket based on branch
     if branch == "subsonic":
         bracket = (1e-6, 0.999999)
     elif branch == "supersonic":
@@ -66,7 +74,6 @@ def solve_fanno(gamma: float, known: str, value: float, branch: str = "subsonic"
     else:
         raise ValueError("branch must be 'subsonic' or 'supersonic'")
 
-    # map known -> function(M)
     mapping = {
         "T/T*": lambda M: _fanno_T_Tstar(M, gamma),
         "p/p*": lambda M: _fanno_p_pstar(M, gamma),
@@ -74,6 +81,7 @@ def solve_fanno(gamma: float, known: str, value: float, branch: str = "subsonic"
         "pt/pt*": lambda M: _fanno_pt_ptstar(M, gamma),
         "4fL/D": lambda M: _fanno_4fL_D(M, gamma),
     }
+
     if known not in mapping:
         raise ValueError("known must be one of: M, T/T*, p/p*, rho/rho*, pt/pt*, 4fL/D")
 
@@ -85,3 +93,4 @@ def solve_fanno(gamma: float, known: str, value: float, branch: str = "subsonic"
 
     M_sol = solve_bracketed(root, bracket)
     return props(M_sol)
+

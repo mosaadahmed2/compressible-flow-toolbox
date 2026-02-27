@@ -44,6 +44,7 @@ def oblique_shock(req: ObliqueShockRequest):
             M1=req.M1,
             delta_deg=req.delta_deg,
             gamma=req.gamma,
+            shock_type=req.shock_type
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e

@@ -80,10 +80,12 @@ def solve_isentropic(
     - known: "M", "P_P0", "T_T0", "A_Astar"
     - branch is only used when known="A_Astar"
     """
+
     _validate_gamma(gamma)
     _finite(value, "value")
     known = known.strip()
 
+    # ---------------- Determine Mach number ----------------
     if known == "M":
         M = float(value)
         if M <= 0:
@@ -97,18 +99,43 @@ def solve_isentropic(
 
     elif known == "A_Astar":
         if branch is None:
-            # Default to supersonic? Many tools default subsonic. We'll default subsonic for safety.
             branch = "subsonic"
         M = solve_mach_from_area_ratio(gamma, float(value), branch=branch)
 
     else:
         raise ValueError("known must be one of: M, P_P0, T_T0, A_Astar")
 
+    # ---------------- Standard isentropic properties ----------------
+    T_ratio = T_T0(gamma, M)
+    P_ratio = P_P0(gamma, M)
+    rho_ratio = rho_rho0(gamma, M)
+    A_ratio = A_Astar(gamma, M)
+
+    # ---------------- Supersonic-only properties ----------------
+    if M > 1:
+        # Mach angle (μ)
+        mu = math.degrees(math.asin(1 / M))
+
+        # Prandtl-Meyer function (ν)
+        term1 = math.sqrt((gamma + 1) / (gamma - 1))
+        term2 = math.atan(
+            math.sqrt((gamma - 1) / (gamma + 1) * (M**2 - 1))
+        )
+        term3 = math.atan(math.sqrt(M**2 - 1))
+
+        nu = math.degrees(term1 * term2 - term3)
+    else:
+        mu = None
+        nu = None
+
+    # ---------------- Return all results ----------------
     return {
         "gamma": float(gamma),
         "M": float(M),
-        "T_T0": float(T_T0(gamma, M)),
-        "P_P0": float(P_P0(gamma, M)),
-        "rho_rho0": float(rho_rho0(gamma, M)),
-        "A_Astar": float(A_Astar(gamma, M)),
+        "T_T0": float(T_ratio),
+        "P_P0": float(P_ratio),
+        "rho_rho0": float(rho_ratio),
+        "A_Astar": float(A_ratio),
+        "mu_deg": mu,
+        "nu_deg": nu,
     }

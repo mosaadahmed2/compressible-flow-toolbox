@@ -1,5 +1,6 @@
 from __future__ import annotations
 import math
+from typing import Literal
 from backend.solvers.root_finding import solve_bracketed
 
 
@@ -12,14 +13,20 @@ def _theta_beta_m_eq(beta: float, M1: float, gamma: float, delta: float) -> floa
     right = (
         2
         * (1 / math.tan(beta))
-        * (M1**2 * math.sin(beta)**2 - 1)
+        * (M1**2 * math.sin(beta) ** 2 - 1)
         / (M1**2 * (gamma + math.cos(2 * beta)) + 2)
     )
 
     return left - right
 
 
-def solve_oblique_shock(M1: float, delta_deg: float, gamma: float = 1.4) -> dict:
+def solve_oblique_shock(
+    M1: float,
+    delta_deg: float,
+    gamma: float = 1.4,
+    shock_type: Literal["weak", "strong"] = "weak",
+) -> dict:
+
     if gamma <= 1.0:
         raise ValueError("gamma must be > 1")
 
@@ -31,22 +38,44 @@ def solve_oblique_shock(M1: float, delta_deg: float, gamma: float = 1.4) -> dict
 
     delta = math.radians(delta_deg)
 
-    # beta limits
-    beta_min = math.asin(1 / M1)
-    beta_max = math.pi / 2
+    # Beta limits
+    beta_min = math.asin(1 / M1)          # Mach angle
+    beta_max = math.pi / 2                # 90 degrees
 
-   # Solve weak solution only
-    beta_lower = beta_min + 1e-6
-    beta_upper = math.radians(60)  # upper limit for weak branch
+    # Function wrapper
+    def f(beta):
+        return _theta_beta_m_eq(beta, M1, gamma, delta)
 
-    try:
-        beta = solve_bracketed(
-            lambda b: _theta_beta_m_eq(b, M1, gamma, delta),
-            (beta_lower, beta_upper),
-        )
-    except ValueError:
+    # Scan beta range and collect ALL valid roots
+    N = 200
+    betas = [
+        beta_min + (beta_max - beta_min) * i / N
+        for i in range(N + 1)
+    ]
+
+    roots = []
+
+    for i in range(N):
+        if f(betas[i]) * f(betas[i + 1]) < 0:
+            try:
+                root = solve_bracketed(f, (betas[i], betas[i + 1]))
+                roots.append(root)
+            except Exception:
+                continue
+
+    if not roots:
         raise ValueError("δ exceeds δ_max (detached shock)")
 
+    # Sort roots
+    roots = sorted(roots)
+
+    # Select weak or strong
+    if shock_type == "weak":
+        beta = roots[0]      # smaller beta
+    else:
+        beta = roots[-1]     # larger beta
+
+    # ---------------- Compute downstream properties ----------------
 
     # Normal component
     Mn1 = M1 * math.sin(beta)
@@ -72,6 +101,7 @@ def solve_oblique_shock(M1: float, delta_deg: float, gamma: float = 1.4) -> dict
         "gamma": float(gamma),
         "M1": float(M1),
         "delta_deg": float(delta_deg),
+        "shock_type": shock_type,
         "beta_deg": math.degrees(beta),
         "Mn1": float(Mn1),
         "Mn2": float(Mn2),
