@@ -136,6 +136,6 @@ def solve_isentropic(
         "P_P0": float(P_ratio),
         "rho_rho0": float(rho_ratio),
         "A_Astar": float(A_ratio),
-        "mu_deg": mu,
-        "nu_deg": nu,
+        "mu_deg": float(mu) if mu is not None else None,
+        "nu_deg": float(nu) if nu is not None else None,
     }
