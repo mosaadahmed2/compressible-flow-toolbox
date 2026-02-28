@@ -83,6 +83,12 @@ def solve_rayleigh(gamma: float, known: str, value: float, branch: str = "subson
     def root(M: float) -> float:
         return f(M) - target
 
-    M_sol = solve_bracketed(root, bracket)
+    try:
+        M_sol = solve_bracketed(root, bracket)
+    except ValueError:
+        raise ValueError(
+        "No solution found in selected branch. "
+        "Check branch selection or ensure value is physically valid."
+    )
     return props(M_sol)
 

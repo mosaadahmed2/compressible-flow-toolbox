@@ -48,7 +48,8 @@ def solve_fanno(gamma: float, known: str, value: float, branch: str = "subsonic"
         T_Tstar = _fanno_T_Tstar(M, gamma)
 
         # Critical entropy gain
-        Smax_R = math.log(p_pstar) - (gamma / (gamma - 1.0)) * math.log(T_Tstar)
+        Smax_R = (
+            ((gamma - 1.0)/gamma) * math.log(p_pstar)- math.log(T_Tstar))
 
         return {
             "gamma": float(gamma),
@@ -91,6 +92,12 @@ def solve_fanno(gamma: float, known: str, value: float, branch: str = "subsonic"
     def root(M: float) -> float:
         return f(M) - target
 
-    M_sol = solve_bracketed(root, bracket)
+    try:
+        M_sol = solve_bracketed(root, bracket)
+    except ValueError:
+        raise ValueError(
+        "No solution found in selected branch. "
+        "Check branch selection or ensure value is physically valid."
+    )
     return props(M_sol)
 

@@ -10,14 +10,15 @@ export default function RayleighForm() {
   const [error, setError] = useState("");
 
   const labelMap = {
-    "p/p*": "P / P*",
+    gamma: "γ",
+    M: "M",
+    "p/p*": "p / p*",
     "T/T*": "T / T*",
     "rho/rho*": "ρ / ρ*",
     "Tt/Tt*": "Tₜ / Tₜ*",
     "pt/pt*": "Pₜ / Pₜ*",
-    "4fL/D": "4fL / D",
     "Smax/R": "Smax / R",
-  };  
+  };
 
   async function compute() {
     setError("");
@@ -61,10 +62,10 @@ export default function RayleighForm() {
 
       {known !== "M" && (
         <div className="form-group">
-          <label>Branch</label>
+          <label>Flow Regime</label>
           <select value={branch} onChange={(e) => setBranch(e.target.value)}>
-            <option value="subsonic">Subsonic</option>
-            <option value="supersonic">Supersonic</option>
+          <option value="subsonic">Subsonic (M &lt; 1)</option>
+          <option value="supersonic">Supersonic (M &gt; 1)</option>
           </select>
         </div>
       )}

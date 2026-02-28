@@ -50,7 +50,6 @@ class FannoRequest(BaseModel):
     known: Literal["M", "T/T*", "p/p*", "rho/rho*", "pt/pt*", "4fL/D"]
     value: float
     branch: Optional[Literal["subsonic", "supersonic"]] = "subsonic"
-    Smax_R: float
 
 
 class RayleighRequest(BaseModel):
@@ -58,6 +57,6 @@ class RayleighRequest(BaseModel):
     known: Literal["M", "p/p*", "T/T*", "rho/rho*", "Tt/Tt*", "pt/pt*"]
     value: float
     branch: Optional[Literal["subsonic", "supersonic"]] = "subsonic"
-    Smax_R: float
+    
 
 
