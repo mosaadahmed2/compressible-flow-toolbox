@@ -25,7 +25,8 @@ class IsentropicResponse(BaseModel):
 
 class NormalShockRequest(BaseModel):
     gamma: float = Field(1.4, gt=1.0, description="Heat capacity ratio (default 1.4)")
-    M1: float = Field(..., gt=0.0, description="Upstream Mach number (must be > 1 for a normal shock)")
+    known: Literal["M1", "M2"]
+    value: float
 
 
 class NormalShockResponse(BaseModel):
@@ -41,8 +42,9 @@ class NormalShockResponse(BaseModel):
 
 class ObliqueShockRequest(BaseModel):
     gamma: float = Field(1.4, gt=1.0)
-    M1: float = Field(..., gt=1.0)
-    delta_deg: float = Field(..., gt=0.0)
+    known: Literal["M1", "M2"]
+    value: float
+    delta_deg: float
     shock_type: Literal["weak", "strong"] = "weak"
 
 class FannoRequest(BaseModel):
