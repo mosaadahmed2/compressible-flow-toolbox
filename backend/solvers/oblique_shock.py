@@ -20,7 +20,7 @@ def _theta_beta_m_eq(beta: float, M1: float, gamma: float, delta: float) -> floa
     return left - right
 
 
-def solve_oblique_shock(
+def _compute_oblique_shock(
     M1: float,
     delta_deg: float,
     gamma: float = 1.4,
@@ -110,3 +110,71 @@ def solve_oblique_shock(
         "rho2/rho1": float(rho2_rho1),
         "T2/T1": float(T2_T1),
     }
+
+def solve_oblique_shock(
+    gamma: float,
+    known: str,
+    value: float,
+    delta_deg: float,
+    shock_type: Literal["weak", "strong"] = "weak",
+) -> dict:
+
+    if known == "M1":
+
+        M1 = float(value)
+
+        if M1 <= 1:
+            raise ValueError("Upstream Mach must be > 1")
+
+        return _compute_oblique_shock(M1, delta_deg, gamma, shock_type)
+
+    elif known == "M2":
+
+        target_M2 = float(value)
+
+        if target_M2 <= 0:
+            raise ValueError("Downstream Mach must be > 0")
+
+        def f(M1):
+            try:
+                result = _compute_oblique_shock(
+                    M1, delta_deg, gamma, shock_type
+                )
+
+                return result["M2"] - target_M2
+
+            except Exception:
+                # return large positive number so solver keeps searching
+                return 1e3
+
+        # search for valid bracket first
+        M_min = max(1.0001, target_M2)
+        M_max = 50
+        N = 200
+
+        grid = [
+            M_min + (M_max - M_min) * i / N
+            for i in range(N + 1)
+        ]
+
+        bracket = None
+
+        for i in range(N):
+            try:
+                f1 = f(grid[i])
+                f2 = f(grid[i+1])
+                if f1 * f2 < 0:
+                    bracket = (grid[i], grid[i+1])
+                    break
+            except Exception:
+                continue
+
+        if bracket is None:
+            raise ValueError("No upstream Mach solution found")
+
+        M1 = solve_bracketed(f, bracket)
+
+        return _compute_oblique_shock(M1, delta_deg, gamma, shock_type)
+
+    else:
+        raise ValueError("known must be 'M1' or 'M2'")
