@@ -3,39 +3,38 @@ import { api } from "/src/api";
 
 export default function ObliqueShockForm() {
   const [gamma, setGamma] = useState(1.4);
-  const [M1, setM1] = useState(2.5);
+  const [known, setKnown] = useState("M1");
+  const [value, setValue] = useState(2.5);
   const [deltaDeg, setDeltaDeg] = useState(10);
   const [shockType, setShockType] = useState("weak");  // ✅ added
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
   const labelMap = {
-    gamma: "γ",
-  
     M1: "M₁",
     M2: "M₂",
     Mn1: "Mₙ₁",
     Mn2: "Mₙ₂",
-  
     beta_deg: "β (deg)",
     delta_deg: "δ (deg)",
-  
     "p2/p1": "P₂ / P₁",
     "rho2/rho1": "ρ₂ / ρ₁",
-    "T2/T1": "T₂ / T₁",
+    "T2/T1": "T₂ / T₁"
   };
   
 
   async function compute() {
     setError("");
     setResult(null);
+    
 
     try {
       const payload = {
         gamma,
-        M1,
+        known,
+        value,
         delta_deg: deltaDeg,
-        shock_type: shockType,   // ✅ send to backend
+        shock_type: shockType
       };
 
       const res = await api.obliqueShock(payload);
@@ -59,13 +58,21 @@ export default function ObliqueShockForm() {
       </div>
 
       <div className="form-group">
-        <label>Upstream Mach (M₁)</label>
-        <input
-          type="number"
-          value={M1}
-          onChange={(e) => setM1(+e.target.value)}
-        />
-      </div>
+  <label>Known Property</label>
+  <select value={known} onChange={(e) => setKnown(e.target.value)}>
+    <option value="M1">Upstream Mach (M₁)</option>
+    <option value="M2">Downstream Mach (M₂)</option>
+  </select>
+</div>
+
+<div className="form-group">
+  <label>Value</label>
+  <input
+    type="number"
+    value={value}
+    onChange={(e) => setValue(+e.target.value)}
+  />
+</div>
 
       <div className="form-group">
         <label>Deflection Angle δ (deg)</label>
@@ -106,8 +113,12 @@ export default function ObliqueShockForm() {
                 {labelMap[k] || k}
               </span>
               <span className="result-value">
-                {v === null ? "N/A" : Number(v).toFixed(4)}
-              </span>
+              {v === null
+                ? "N/A"
+                : typeof v === "number"
+                ? v.toFixed(4)
+                : v}
+            </span>
             </div>
           ))}
         </div>

@@ -3,7 +3,8 @@ import { api } from "/src/api";
 
 export default function NormalShockForm() {
   const [gamma, setGamma] = useState(1.4);
-  const [M1, setM1] = useState(2);
+  const [known, setKnown] = useState("M1");
+  const [value, setValue] = useState(2);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
@@ -27,9 +28,15 @@ export default function NormalShockForm() {
   async function compute() {
     setError("");
     setResult(null);
+    
 
     try {
-      const res = await api.normalShock({ gamma, M1 });
+      const payload = {
+        gamma,
+        known,
+        value
+      };
+      const res = await api.normalShock(payload);
       setResult(res);
     } catch (e) {
       setError(e.message);
@@ -50,13 +57,21 @@ export default function NormalShockForm() {
       </div>
 
       <div className="form-group">
-        <label>Upstream Mach (M₁)</label>
-        <input
-          type="number"
-          value={M1}
-          onChange={(e) => setM1(+e.target.value)}
-        />
-      </div>
+  <label>Known Property</label>
+  <select value={known} onChange={(e) => setKnown(e.target.value)}>
+    <option value="M1">Upstream Mach (M₁)</option>
+    <option value="M2">Downstream Mach (M₂)</option>
+  </select>
+</div>
+
+<div className="form-group">
+  <label>Value</label>
+  <input
+    type="number"
+    value={value}
+    onChange={(e) => setValue(+e.target.value)}
+  />
+</div>
 
       <div className="button-row">
   <button onClick={compute}>Compute</button>
