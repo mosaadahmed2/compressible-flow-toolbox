@@ -15,7 +15,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://compressible-flow-toolbox.vercel.app",
+        "https://compflowtoolbox.rollinsengineering.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
