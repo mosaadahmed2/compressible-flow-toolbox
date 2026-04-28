@@ -11,12 +11,14 @@ app = FastAPI(
     description="Validated compressible-flow calculations (direct + inverse).",
 )
 
+origins = [
+    "http://localhost:5173",  # for local dev
+    "https://compflowtoolbox.rollinsengineering.com",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "https://compflowtoolbox.rollinsengineering.com",
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
